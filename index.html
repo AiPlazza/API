@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="assets/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <title>API Documentation for AiPlazza.com</title>
+	<meta name="description" content="Explore comprehensive documentation for AiPlazza API. Find detailed guides, error code explanations, and helpful resources to make the most out of our API services. Ensure seamless integration and optimal performance with our user-friendly documentation.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+</head>
+<body>
+    <header>
+	 <div class="container">
+	<div class="logo"><img src="assets/images/icon-logo-360x72.png" alt="AI Plazza Logo"></div>
+	</div>
+        <div class="container">
+            <h1>API Documentation</h1>
+        </div>
+		
+    </header>
+    <div class="container">
+<nav>
+    <ul>
+        <li><a href="#description">Description</a></li>
+		 <li><a href="#usage">Usage</a></li>
+		 <li><a href="#overview">Overview</a></li>
+         <li><a href="#subscription">Subscription</a></li>
+        <li><a href="#url-processing">URL Processing</a></li>
+		<li><a href="#content_types">Content Types</a></li>
+		<li><a href="#output_languages">Output Languages</a></li>
+		<li><a href="#error_codes">Error Codes</a></li>
+    </ul>
+</nav>
+<main>
+    <div id="search-container">
+        <input type="text" id="search-box" placeholder="Search in the document...">
+        <button id="search-button">Search</button>
+    </div>
+	<section id="description" style="border-top:0;padding-top:0;">
+			<h2>About AiPlazza.com</h2>
+			<p>AiPlazza delivers complete solutions for everyone to use AI Models as profitably as possible. 
+			You can use the API and get the data you need without spending hours. 
+			Create your free trial at: <a href="https://aiplazza.com/free-trial.html">Free Trial</a></p>
+			<p>You can get your API key at: <a href="https://aiplazza.com/premium/">Premium</a></p>
+			<p><a href="https://aiplazza.com/wordpress-ai-plugins.html">WordPress AI Plugins</a></p>
+			<p><a href="https://aiplazza.com/joomla-ai-extensions.html">Joomla AI Extensions</a></p>
+	</section>
+	<section id="usage">
+			<h2>Usage</h2>
+			<p>In this section, we explain that <strong>you must obtain an API key and API email</strong> to use the services.
+			<br/>You can create your first API key and API email by starting a free trial:</p>
+			<p><a href="https://aiplazza.com/free-trial.html">Free Trial</a></p>
+			<p>The free trial gives you 2500 free usage credits. If you find these services beneficial, you can add more credits by subscribing to a package:</p>
+			<p><a href="https://aiplazza.com/packages.html">Packages</a></p>
+	</section>
+	<section id="subscription">
+		<h2>Subscription</h2>
+		<p>This endpoint allows you to <strong>view your subscription details</strong> including remaining credits and expiration date.</p>
+		<h4>Example Curl Command</h4>
+		<pre><code class="language-bash" data-id="7">curl -X POST https://api.aiplazza.com/subscription/v1/ \
+	 -H "Content-Type: application/json" \
+	 -d '{
+		   "apikey": "your_apikey", // obtain your api key at https://aiplazza.com/premium/
+		   "apiemail": "your_apiemail" // obtain your api email at https://aiplazza.com/premium/
+		 }'</code></pre>
+		
+		<h4>Explanation of Fields</h4>
+		<ul>
+			<li>
+				<strong>apikey</strong>: Your API key obtained from <a href="https://aiplazza.com/premium/">API Credentials</a>.
+			</li>
+			<li>
+				<strong>apiemail</strong>: Your API email obtained from <a href="https://aiplazza.com/premium/">API Credentials</a>.
+			</li>
+		</ul>
+	</section>
+	<section id="url-processing">
+		<h2>URL Processing</h2>
+		<p>This endpoint <strong>processes content from a given URL using AI-powered tasks</strong> such as text parsing, grammar correction, fact extraction, and more.</p>
+		<h4>Example Curl Command</h4>
+		<pre><code class="language-bash" data-id="6">curl -X POST https://api.aiplazza.com/url/v1/ \
+	 -H "Content-Type: application/json" \
+	 -d '{
+		   "apikey": "your_apikey", // obtain your api key at https://aiplazza.com/premium/
+		   "apiemail": "your_apiemail", // obtain your api email at https://aiplazza.com/premium/
+		   "url": "https://www.yoursite.com", // URL you want to parse
+		   "task": "parsetext", // task to be performed on the given URL (see more at Explanation of Fields)
+		   "content_type": "", // content type of the target URL, please see the documentation
+		   "elements_selected": "", // element class or id to parse only (e.g., #maincontent, .article-body)
+		   "elements_excluded": "", // elements class or id to exclude from parsing
+		   "output_language": "", // output language of the result
+		   "extra_notes": "" // extra commands, prompts, or notes you want to provide to the AI
+		 }'</code></pre>
+		
+		<h4>Explanation of Fields</h4>
+		<ul>
+			<li>
+				<strong>apikey</strong>: Your API key obtained from <a href="https://aiplazza.com/premium/">https://aiplazza.com/premium/</a>.
+			</li>
+			<li>
+				<strong>apiemail</strong>: Your API email obtained from <a href="https://aiplazza.com/premium/">https://aiplazza.com/premium/</a>.
+			</li>
+			<li>
+				<strong>url</strong>: The URL of the website you want to parse.
+			</li>
+			<li>
+				<strong>task</strong>: The specific task you want to perform on the given URL. Possible tasks include:
+				<ul>
+					<li><code>parsetext</code>: Extracts text from the URL.</li>
+					<li><code>grammarize</code>: Performs grammar correction on the extracted text.</li>
+					<li><code>parsefacts</code>: Extracts factual information from the text.</li>
+					<li><code>parseqa</code>: Extracts questions and answers from the text.</li>
+					<li><code>parseqajsonl</code>: Extracts questions and answers and returns them in JSONL format.</li>
+					<li><code>summarize</code>: Summarizes the content of the URL.</li>
+					<li><code>translate</code>: Translates the content to another language.</li>
+				</ul>
+			</li>
+			<li>
+				<strong>content_type</strong>: The type of content found at the URL (e.g., text/html, application/json). Refer to the documentation for supported content types.
+			</li>
+			<li>
+				<strong>elements_selected</strong>: Specific elements to parse, identified by class or id (e.g., #maincontent,.article-body).
+			</li>
+			<li>
+				<strong>elements_excluded</strong>: Specific elements to exclude from parsing, identified by class or id (e.g., #copyright,.sidebar,#banner).
+			</li>
+			<li>
+				<strong>output_language</strong>: The language in which you want the output. <b>Leave blank to use the same language as the content.</b>
+			</li>
+			<li>
+				<strong>extra_notes</strong>: Any additional commands, prompts, or notes you want to provide to the AI for processing the URL.
+			</li>
+		</ul>
+	</section>
+	<section id="content_types">
+		<h2>List of Content Types</h2>
+		<p>Below you can find the latest updated list of content types. It is important to choose a content type when you are creating facts, QA pairs, or any type of training data.</p>
+		<h4>Explanation of Content Types:</h4>
+		<ul>
+			<li><code>Art</code>: Categorizes the content type of URL, Document, or Text as "Art" and searches especially the fields: artwork, artist bio, pricing, materials, dimensions, exhibition history, galleries.</li>
+			<li><code>Automotive</code>: Categorizes the content type of URL, Document, or Text as "Automotive" and searches especially the fields: vehicle specs, pricing, dealer info, customer reviews, fuel efficiency, safety ratings, warranty.</li>
+			<li><code>Beauty</code>: Categorizes the content type of URL, Document, or Text as "Beauty" and searches especially the fields: beauty product ingredients, directions, pricing, user reviews, brand information, skin type suitability.</li>
+			<li><code>Business</code>: Categorizes the content type of URL, Document, or Text as "Business" and searches especially the fields: products/services, pricing, case studies, team bios, contact info, market analysis, industry trends.</li>
+			<li><code>Culture</code>: Categorizes the content type of URL, Document, or Text as "Culture" and searches especially the fields: cultural traditions, artifacts, expert analysis, related events, historical context, significance.</li>
+			<li><code>Education</code>: Categorizes the content type of URL, Document, or Text as "Education" and searches especially the fields: course curriculum, duration, certification, pricing, enrollment policies, accreditation, student reviews.</li>
+			<li><code>Entertainment</code>: Categorizes the content type of URL, Document, or Text as "Entertainment" and searches especially the fields: show/movie details, cast, ratings, pricing, viewing options, release date, genre, director.</li>
+			<li><code>Environment</code>: Categorizes the content type of URL, Document, or Text as "Environment" and searches especially the fields: environmental facts, product sustainability, green tips, impact analysis, conservation efforts.</li>
+			<li><code>Event</code>: Categorizes the content type of URL, Document, or Text as "Event" and searches especially the fields: event details, date/time, location, agenda, speakers, registration info, sponsors, attendees.</li>
+			<li><code>Fashion</code>: Categorizes the content type of URL, Document, or Text as "Fashion" and searches especially the fields: clothing/accessory details, sizes, materials, pricing, care info, designer, collection.</li>
+			<li><code>Finance</code>: Categorizes the content type of URL, Document, or Text as "Finance" and searches especially the fields: financial products, interest rates, fees, eligibility, application process, risk analysis, investment options.</li>
+			<li><code>Food</code>: Categorizes the content type of URL, Document, or Text as "Food" and searches especially the fields: recipes, ingredients, nutrition info, cooking instructions, user ratings, cuisine type, dietary restrictions.</li>
+			<li><code>Gaming</code>: Categorizes the content type of URL, Document, or Text as "Gaming" and searches especially the fields: game features, system requirements, pricing, online play, release date, developer, platform.</li>
+			<li><code>Health</code>: Categorizes the content type of URL, Document, or Text as "Health" and searches especially the fields: medical info, treatments, medications, dosage, side effects, doctor ratings, patient testimonials, alternative therapies.</li>
+			<li><code>History</code>: Categorizes the content type of URL, Document, or Text as "History" and searches especially the fields: historical event details, dates, locations, key figures, references, impact, legacy.</li>
+			<li><code>Home</code>: Categorizes the content type of URL, Document, or Text as "Home" and searches especially the fields: home products, dimensions, materials, pricing, care instructions, brand, energy efficiency.</li>
+			<li><code>Legal</code>: Categorizes the content type of URL, Document, or Text as "Legal" and searches especially the fields: terms, conditions, privacy, refund policies, legal precedents, compliance, case studies.</li>
+			<li><code>Lifestyle</code>: Categorizes the content type of URL, Document, or Text as "Lifestyle" and searches especially the fields: lifestyle tips, product recommendations, expert advice, trends, personal stories.</li>
+			<li><code>Music</code>: Categorizes the content type of URL, Document, or Text as "Music" and searches especially the fields: album/song details, artist info, pricing, streaming options, genre, release date, record label.</li>
+			<li><code>News</code>: Categorizes the content type of URL, Document, or Text as "News" and searches especially the fields: headline/title, subheadline, publication date and time, author, news source, article body, summary/abstract, keywords/tags, category/section, multimedia content, location, related articles/links, comments/discussion, social media integration, editor's note/correction, advertisement.</li>
+			<li><code>Pets</code>: Categorizes the content type of URL, Document, or Text as "Pets" and searches especially the fields: pet product details, pricing, feeding instructions, veterinarian info, breed specifics, care tips.</li>
+			<li><code>Politics</code>: Categorizes the content type of URL, Document, or Text as "Politics" and searches especially the fields: political candidate bios, policy platforms, election info, campaign news, endorsements, voting records.</li>
+			<li><code>Product</code>: Categorizes the content type of URL, Document, or Text as "Product" and searches especially the fields: product features, technical specs, pricing details, policies, versions, delivery info, user ratings, language support, brand, warranty.</li>
+			<li><code>Real Estate</code>: Categorizes the content type of URL, Document, or Text as "Real Estate" and searches especially the fields: property details, pricing, neighborhood info, agent contact, floor plans, photos, virtual tours.</li>
+			<li><code>Science</code>: Categorizes the content type of URL, Document, or Text as "Science" and searches especially the fields: scientific research details, findings, citations, expert commentary, methodology, implications.</li>
+			<li><code>Service</code>: Categorizes the content type of URL, Document, or Text as "Service" and searches especially the fields: service offerings, pricing, policies, supported languages, user feedback, service area, guarantees.</li>
+			<li><code>Sports</code>: Categorizes the content type of URL, Document, or Text as "Sports" and searches especially the fields: team/player stats, schedules, scores, tickets, merchandise, league standings, player bios.</li>
+			<li><code>Technology</code>: Categorizes the content type of URL, Document, or Text as "Technology" and searches especially the fields: software features, system requirements, pricing, support options, version history, compatibility, user manuals.</li>
+			<li><code>Travel</code>: Categorizes the content type of URL, Document, or Text as "Travel" and searches especially the fields: destination details, dates, pricing, package inclusions, booking policies, travel tips, local attractions.</li>
+			<li><code>Tutorial</code>: Categorizes the content type of URL, Document, or Text as "Tutorial" and searches especially the fields: step-by-step instructions, required materials or tools, expected duration, difficulty level, visual aids, prerequisites.</li>
+			<li><code>User Guide</code>: Categorizes the content type of URL, Document, or Text as "User Guide" and searches especially the fields: product overview, setup instructions, troubleshooting tips, maintenance and care, contact information for support, FAQs.</li>
+			<li><code>DIY</code>: Categorizes the content type of URL, Document, or Text as "DIY" and searches especially the fields: project instructions, required materials, difficulty level, step-by-step guide, safety tips.</li>
+			<li><code>Photography</code>: Categorizes the content type of URL, Document, or Text as "Photography" and searches especially the fields: camera specs, shooting techniques, editing tips, pricing, photographer bio, portfolio.</li>
+			<li><code>Literature</code>: Categorizes the content type of URL, Document, or Text as "Literature" and searches especially the fields: book details, author info, genre, publication date, synopsis, reviews, awards.</li>
+			<li><code>Parenting</code>: Categorizes the content type of URL, Document, or Text as "Parenting" and searches especially the fields: childcare tips, product recommendations, expert advice, developmental milestones, health and safety.</li>
+		</ul>
+	</section>
+	<section id="output_languages">
+		<h2>List of Output Languages</h2>
+		<p>Below you can find the latest updated list of output languages. Choose an appropriate output language for your AI tasks to get the desired results.</p>
+		<ul>
+			<li><code>Afrikaans</code></li>
+			<li><code>Albanian</code></li>
+			<li><code>Amharic</code></li>
+			<li><code>Arabic</code></li>
+			<li><code>Armenian</code></li>
+			<li><code>Azerbaijani</code></li>
+			<li><code>Basque</code></li>
+			<li><code>Belarusian</code></li>
+			<li><code>Bengali</code></li>
+			<li><code>Bosnian</code></li>
+			<li><code>Bulgarian</code></li>
+			<li><code>Catalan</code></li>
+			<li><code>Cebuano</code></li>
+			<li><code>Chichewa</code></li>
+			<li><code>Chinese Simplified</code></li>
+			<li><code>Chinese Traditional</code></li>
+			<li><code>Corsican</code></li>
+			<li><code>Croatian</code></li>
+			<li><code>Czech</code></li>
+			<li><code>Danish</code></li>
+			<li><code>Dutch</code></li>
+			<li><code>English</code></li>
+			<li><code>Esperanto</code></li>
+			<li><code>Estonian</code></li>
+			<li><code>Filipino</code></li>
+			<li><code>Finnish</code></li>
+			<li><code>French</code></li>
+			<li><code>Frisian</code></li>
+			<li><code>Galician</code></li>
+			<li><code>Georgian</code></li>
+			<li><code>German</code></li>
+			<li><code>Greek</code></li>
+			<li><code>Gujarati</code></li>
+			<li><code>Haitian Creole</code></li>
+			<li><code>Hausa</code></li>
+			<li><code>Hawaiian</code></li>
+			<li><code>Hebrew</code></li>
+			<li><code>Hindi</code></li>
+			<li><code>Hmong</code></li>
+			<li><code>Hungarian</code></li>
+			<li><code>Icelandic</code></li>
+			<li><code>Igbo</code></li>
+			<li><code>Indonesian</code></li>
+			<li><code>Irish</code></li>
+			<li><code>Italian</code></li>
+			<li><code>Japanese</code></li>
+			<li><code>Javanese</code></li>
+			<li><code>Kannada</code></li>
+			<li><code>Kazakh</code></li>
+			<li><code>Khmer</code></li>
+			<li><code>Korean</code></li>
+			<li><code>Kurdish</code></li>
+			<li><code>Kyrgyz</code></li>
+			<li><code>Lao</code></li>
+			<li><code>Latin</code></li>
+			<li><code>Latvian</code></li>
+			<li><code>Lithuanian</code></li>
+			<li><code>Luxembourgish</code></li>
+			<li><code>Macedonian</code></li>
+			<li><code>Malagasy</code></li>
+			<li><code>Malay</code></li>
+			<li><code>Malayalam</code></li>
+			<li><code>Maltese</code></li>
+			<li><code>Maori</code></li>
+			<li><code>Marathi</code></li>
+			<li><code>Mongolian</code></li>
+			<li><code>Myanmar (Burmese)</code></li>
+			<li><code>Nepali</code></li>
+			<li><code>Norwegian</code></li>
+			<li><code>Odia</code></li>
+			<li><code>Pashto</code></li>
+			<li><code>Persian</code></li>
+			<li><code>Polish</code></li>
+			<li><code>Portuguese</code></li>
+			<li><code>Punjabi</code></li>
+			<li><code>Romanian</code></li>
+			<li><code>Russian</code></li>
+			<li><code>Samoan</code></li>
+			<li><code>Scots Gaelic</code></li>
+			<li><code>Serbian</code></li>
+			<li><code>Sesotho</code></li>
+			<li><code>Shona</code></li>
+			<li><code>Sindhi</code></li>
+			<li><code>Sinhala</code></li>
+			<li><code>Slovak</code></li>
+			<li><code>Slovenian</code></li>
+			<li><code>Somali</code></li>
+			<li><code>Spanish</code></li>
+			<li><code>Sundanese</code></li>
+			<li><code>Swahili</code></li>
+			<li><code>Swedish</code></li>
+			<li><code>Swiss German</code></li>
+			<li><code>Tajik</code></li>
+			<li><code>Tamil</code></li>
+			<li><code>Tatar</code></li>
+			<li><code>Telugu</code></li>
+			<li><code>Thai</code></li>
+			<li><code>Turkish</code></li>
+			<li><code>Turkmen</code></li>
+			<li><code>Ukrainian</code></li>
+			<li><code>Urdu</code></li>
+			<li><code>Uyghur</code></li>
+			<li><code>Uzbek</code></li>
+			<li><code>Vietnamese</code></li>
+			<li><code>Welsh</code></li>
+			<li><code>Xhosa</code></li>
+			<li><code>Yiddish</code></li>
+			<li><code>Yoruba</code></li>
+			<li><code>Zulu</code></li>
+		</ul>
+	</section>
+	<section id="error_codes">
+		<h2>Error Codes</h2>
+		<p>
+			In the development and usage of our API, you may encounter various error codes that help identify specific issues and guide you towards resolving them.
+			Understanding these error codes is crucial for troubleshooting and ensuring seamless integration with our services.
+			Below is a comprehensive list of error codes, along with their descriptions, to assist you in diagnosing and addressing any problems that may arise during your interactions with our API.
+		</p>
+		<ul>
+			<li><strong>0:</strong> Unauthorized access attempt from {ipaddress}</li>
+			<li><strong>1:</strong> API key or email is missing</li>
+			<li><strong>2:</strong> Invalid API key or API Email</li>
+			<li><strong>3:</strong> API key expired</li>
+			<li><strong>4:</strong> Insufficient credits</li>
+			<li><strong>5:</strong> Parsed URL {url} does not have any data</li>
+			<li><strong>6:</strong> No task provided</li>
+		</ul>
+	</section>
+
+
+</main>
+
+    
+	</div>
+
+    
+    
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+	<!-- scroll to top -->
+	<button id="scrollToTopBtn">Top</button>
+    <!-- Your existing sections -->
+    <div id="search-results">
+        <span id="close-search-results" style="float: right; cursor: pointer;">&times;</span>
+        <p>Searched for: <span id="search-term-display"></span></p>
+        <p>Total <span id="search-count"></span> results found in the document</p>
+    </div>
+</body>
+</html>
